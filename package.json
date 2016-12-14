@@ -31,7 +31,10 @@
     "url": "http://github.com/zrrrzzt/html-validator/issues"
   },
   "dependencies": {
-    "request": "2.78.0",
+    "async-await": "^0.1.40",
+    "bluebird": "^3.4.6",
+    "request": "^2.78.0",
+    "request-promise": "^4.1.1",
     "valid-url": "1.0.9"
   },
   "devDependencies": {

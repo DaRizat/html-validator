@@ -1,36 +1,34 @@
 'use strict'
 
-function validator (options, callback) {
-  var request = require('request')
-  var validUrl = require('valid-url')
-  var setupOptions = require('./lib/setup-options')
+let request = require('request-promises');
+let validUrl = require('valid-url');
+let setupOptions = require('./lib/setup-options');
+let async = require('asyncawait/async');
+let await = require('asyncawait/await');
 
-  if (!options) {
-    return callback(new Error('Missing required input: options object'), null)
-  }
+validator async ((options) => {
+	if (!options) {
+		throw new Error('Missing required input: options object');
+	}
 
-  if (!options.url && !options.data) {
-    return callback(new Error('Missing required params: url or data'), null)
-  }
+	if (!options.url && !options.data) {
+		throw new Error('Missing required params: url or data');
+	}
 
-  if (options.url && !validUrl.isWebUri(options.url)) {
-    return callback(new Error('Invalid url'), null)
-  }
+	if (options.url && !validUrl.isWebUri(options.url)) {
+		throw new Error('Invalid url');
+	}
 
-  var reqOpts = setupOptions(options)
-  request(reqOpts, function (error, response, result) {
-    if (error) {
-      return callback(error, null)
-    }
-
-    if (response && response.statusCode !== 200) {
-      return callback(new Error('Validator returned unexpected statuscode: ' + response.statusCode), null)
-    }
-
-    var data = options.format === 'json' ? JSON.parse(result) : result
-
-    return callback(null, data)
-  })
-}
+	var reqOpts = setupOptions(options)
+	try {
+		let res = await request(reqOpts);
+		if( res && res.statusCode !== 200){
+			throw new Error('Validator returned unexpected statuscode: ' + res.statusCode);
+		}
+		return options.format === 'json' ? JSON.parse(res) : res;
+	} catch(err) {
+		throw new Error(err);
+	};
+});
 
 module.exports = validator
