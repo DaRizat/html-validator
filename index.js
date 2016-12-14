@@ -6,7 +6,7 @@ let setupOptions = require('./lib/setup-options');
 let async = require('asyncawait/async');
 let await = require('asyncawait/await');
 
-validator async ((options) => {
+let validator = async ((options) => {
 	if (!options) {
 		throw new Error('Missing required input: options object');
 	}
