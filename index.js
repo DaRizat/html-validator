@@ -1,6 +1,6 @@
 'use strict'
 
-let request = require('request-promises');
+let request = require('request-promise');
 let validUrl = require('valid-url');
 let setupOptions = require('./lib/setup-options');
 let async = require('asyncawait/async');
