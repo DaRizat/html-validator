@@ -21,7 +21,7 @@ let validator = async ((options) => {
 
 	var reqOpts = setupOptions(options)
 	try {
-		let res = await request(reqOpts);
+		let res = await (request(reqOpts));
 		if( res && res.statusCode !== 200){
 			throw new Error('Validator returned unexpected statuscode: ' + res.statusCode);
 		}
